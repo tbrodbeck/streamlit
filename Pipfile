@@ -1,0 +1,15 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+streamlit = "==0.79.0"
+numpy = "==1.19.2"
+joblib = "==0.17.0"
+scikit-learn = "==0.23.2"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
