@@ -21,21 +21,30 @@ expander.markdown("""
                   )
 
 # --------------------- USER INPUTS ------------------------------
-param_0 = sd_bar.checkbox("I do not want to fill your inputs", False)
+reg_user = sd_bar.radio("Are you registered user?", ["Yes", "No"])
 
-param_1_list = dict(
-    {0: "<18",
-     1: "18-40",
-     2: "40-65",
-     3: ">65"}
-)
-param_1 = sd_bar.radio("Age group", param_1_list.values())
+# to check if the user is registered, then to ask for id
+if reg_user == "Yes":
+    param_0 = sd_bar.text_input("Enter you id here")
+else:
+    param_0 = sd_bar.checkbox("I do not want to fill your inputs", False)
 
-param_2_list = ['Drama', 'Horror', 'Romantic']
-param_2 = sd_bar.multiselect("Select your favourite genres",
-                           param_2_list,
-                           )
-param_3 = sd_bar.slider("Maximum length in mins", 0, 300)
+    if param_0:
+        # to add from data
+        param_1_list = dict(
+            {0: "<18",
+             1: "18-40",
+             2: "40-65",
+             3: ">65"}
+        )
+        param_1 = sd_bar.radio("Age group", param_1_list.values())
+
+        param_2_list = ['Drama', 'Horror', 'Romantic']
+        param_2 = sd_bar.multiselect("Select your favourite genres",
+                                   param_2_list,
+                                   )
+        param_3 = sd_bar.slider("Maximum length in mins", 0, 300)
+
 
 #------------------------ OUTPUTS------------------------------------
 st.markdown("### Initial prediction")
