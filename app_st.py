@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_player import st_player
 import pandas as pd
 from movie_recommender import get_movie_recommendation, return_titles
+from decouple import config
 
 # ----------------------------------------Basic configs------------------------------------------------------------------
 st.set_page_config(layout="wide")
