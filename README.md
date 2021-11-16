@@ -3,7 +3,7 @@
 Connect to project:
 ```sh
 oc get projects 
-oc project <project name>
+oc project $projectName
 ```
 Deploy app:
 ```sh
