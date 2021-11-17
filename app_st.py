@@ -58,7 +58,7 @@ if not submit_button:
     st.markdown('<h3 style="color:red">Please enter the data on the left panel and submit</h3>',
                 unsafe_allow_html=True)
 else:
-    st.markdown("### Initial prediction is")
+    st.markdown("### Your recommendation:")
     # st.markdown('<h3 style="color:violet">Harry Potter</h3>', unsafe_allow_html=True)
     # st.markdown("### *Youtube search results*")
     # # to get embedded youtube video
@@ -70,4 +70,5 @@ else:
 
     # to get embedded youtube video
     top5 = pd.read_csv('top5.csv')
+    top5.index = range(1, 6)
     st.write(top5)
