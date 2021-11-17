@@ -3,14 +3,15 @@ import pandas as pd
 from botocore.client import Config
 import ibm_boto3
 import io
+from decouple import config
 
 def __iter__(self): return 0
 
 endpoint_dc9ddb978841432ba58f9e610c697598 = 'https://s3.eu.cloud-object-storage.appdomain.cloud'
 
 client_dc9ddb978841432ba58f9e610c697598 = ibm_boto3.client(service_name='s3',
-    ibm_api_key_id='5CeeegWJZTd5oyM4R65-r-fPAqAII_JctAIQ9gsRFTr2',
-    ibm_auth_endpoint="https://iam.cloud.ibm.com/oidc/token",
+    ibm_api_key_id=config('IBM_API_KEY_ID'),
+    ibm_auth_endpoint=config('IBM_AUTH_ENDPOINT'),
     config=Config(signature_version='oauth'),
     endpoint_url=endpoint_dc9ddb978841432ba58f9e610c697598)
 
