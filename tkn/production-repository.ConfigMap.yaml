@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: production-repository
+data:
+  branch: main
+  host: github.com
+  org: cloud-native-garage-method-cohort
+  repo: emea-7-production

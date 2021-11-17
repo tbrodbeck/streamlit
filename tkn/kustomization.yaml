@@ -1,0 +1,12 @@
+# apiVersion: kustomize.config.k8s.io/v1beta1
+# kind: Kustomization
+# resources:
+#   - build-bot.ServiceAccount.yaml
+#   - create-configuration.Task.yaml
+#   - deploy.Task.yaml
+#   - git-credentials.Secret.yaml
+#   - nodejs.pipeline.yaml
+#   - production-repository.ConfigMap.yaml
+#   - quay-io-credentials.Secret.yaml
+#   - save-configuration.Task.yaml
+#   - webhook-receiver.EventListener.yaml

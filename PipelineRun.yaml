@@ -1,0 +1,35 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: ds-bootcamp-orange-mvp-
+spec:
+  params:
+    - name: app-name
+      value: ds-bootcamp-orange-mvp
+    - name: source-repo
+      value: https://github.com/tbrodbeck/streamlit
+    - name: image-repo
+      value: https://quay.io/repository/tillus/ds-bootcamp-orange-mvp
+  serviceAccountName: build-bot
+  pipelineRef:
+    name: build-new-deployment
+  workspaces:
+    - name: pipeline-shared-data
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+    - name: gitops-repository
+      volumeClaimTemplate:
+        spec:
+          resources:
+            requests:
+              storage: 1Gi
+          accessModes:
+            - ReadWriteOnce
+    - name: git-credentials
+      secret:
+        secretName: git-credentials

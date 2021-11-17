@@ -1,0 +1,91 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-new-deployment
+spec:
+  params:
+    - name: source-repo
+      type: string
+      description: Source code repository name
+    - name: app-name
+      type: string
+      description: Application name
+    - name: image-repo
+      type: string
+      description: Image repository name
+  tasks:
+    - name: clone-repository
+      params:
+        - name: url
+          value: $(params.source-repo)
+      taskRef:
+        name: git-clone
+        kind: ClusterTask
+      workspaces:
+        - name: output
+          workspace: pipeline-shared-data
+    - name: create-image
+      taskRef:
+        name: buildah
+        Kind: Task
+      runAfter:
+        - clone-repository
+      workspaces:
+        - name: source
+          workspace: pipeline-shared-data
+      params:
+        - name: IMAGE
+          value: $(params.image-repo):$(tasks.clone-repository.results.commit)
+    - name: create-configuration
+      params:
+        - name: app-name
+          value: $(params.app-name)
+        - name: source-repo
+          value: $(params.source-repo)
+        - name: commit
+          value: $(tasks.clone-repository.results.commit)
+        - name: image-repo
+          value: $(params.image-repo)
+      runAfter:
+        - create-image
+      taskRef:
+        name: create-configuration
+      workspaces:
+        - name: source
+          workspace: pipeline-shared-data
+    - name: deploy
+      params:
+        - name: manifest
+          value: $(tasks.create-configuration.results.manifest)
+        - name: app-namespace
+          value: $(context.pipelineRun.namespace)
+      runAfter:
+        - create-configuration
+      taskRef:
+        name: deploy
+      workspaces:
+        - name: source
+          workspace: pipeline-shared-data
+    - name: save-configuration
+      params:
+        - name: manifest
+          value: "$(tasks.create-configuration.results.manifest)"
+        - name: app-name
+          value: "$(params.app-name)"
+        - name: sha
+          value: "$(tasks.clone-repository.results.commit)"
+      runAfter:
+        - deploy
+      taskRef:
+        name: save-configuration
+      workspaces:
+        - name: source
+          workspace: pipeline-shared-data
+        - name: target
+          workspace: gitops-repository
+        - name: git-credentials
+          workspace: git-credentials
+  workspaces:
+    - name: pipeline-shared-data
+    - name: gitops-repository
+    - name: git-credentials

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ds-bootcamp-orange-mvp
+  namespace: ds-bootcamp-orange-mvp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      bb: web
+  template:
+    metadata:
+      labels:
+        bb: web
+    spec:
+      containers:
+        - name: ds-bootcamp-orange-mvp
+          image: quay.io/tillus/ds-bootcamp-orange-mvp:0.1
+      securityContext: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ds-bootcamp-orange-mvp
+  namespace: ds-bootcamp-orange-mvp
+spec:
+  type: NodePort
+  selector:
+    bb: web
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30001
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app.kubernetes.io/instance: ds-bootcamp-orange-mvp
+    app.kubernetes.io/name: ds-bootcamp-orange-mvp
+  name: ds-bootcamp-orange-mvp
+spec:
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: ds-bootcamp-orange-mvp
+    weight: 100
+  wildcardPolicy: None

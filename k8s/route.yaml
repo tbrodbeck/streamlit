@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: facts-api
+spec:
+  tls:
+    termination: edge
+  to:
+    name: facts-api
+    kind: Service
+    weight: 100
+  wildcardPolicy: None
