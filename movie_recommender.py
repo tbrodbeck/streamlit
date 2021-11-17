@@ -1,7 +1,4 @@
-from math import sqrt
-import numpy as np
-import matplotlib.pyplot as plt
-import os
+from decouple import config
 import types
 import pandas as pd
 from botocore.client import Config
@@ -21,7 +18,7 @@ def __iter__(self): return 0
 endpoint_dc9ddb978841432ba58f9e610c697598 = 'https://s3.eu.cloud-object-storage.appdomain.cloud'
 
 client_dc9ddb978841432ba58f9e610c697598 = ibm_boto3.client(service_name='s3',
-    ibm_api_key_id='5CeeegWJZTd5oyM4R65-r-fPAqAII_JctAIQ9gsRFTr2',
+    ibm_api_key_id=config('API_KEY'),
     ibm_auth_endpoint="https://iam.cloud.ibm.com/oidc/token",
     config=Config(signature_version='oauth'),
     endpoint_url=endpoint_dc9ddb978841432ba58f9e610c697598)
@@ -32,6 +29,7 @@ if not hasattr(body, "__iter__"):
     body.__iter__ = types.MethodType(__iter__, body)
 
 users = pd.read_csv(body, index_col=0)
+users_list = users['user_id']
 
 body = client_dc9ddb978841432ba58f9e610c697598.get_object(Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m', Key='ratings.csv')['Body']
 # add missing __iter__ method, so pandas accepts body as file-like object
@@ -138,8 +136,8 @@ def get_movie_recommendation(movie_name):
     else:
         return "No movies found. Please check your input"
 
-def return_titles():
-    return titles
+def return_titles_users():
+    return titles, users_list
 
 if __name__ == "__main__":
   print(get_movie_recommendation('Hercules'))
