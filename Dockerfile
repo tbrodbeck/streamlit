@@ -6,6 +6,8 @@ WORKDIR /app
 
 COPY requirements.txt ./requirements.txt
 
+COPY top5.csv ./top5.csv
+
 RUN pip install -r requirements.txt
 
 EXPOSE 8501
