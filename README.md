@@ -10,5 +10,3 @@ Deploy app:
 oc new-app https://github.com/tbrodbeck/streamlit --name=$appname
 oc expose svc/$appname # Create link to file for pod
 ```
-gfgd
-kjkn
