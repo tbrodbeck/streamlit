@@ -6,7 +6,7 @@ import requests
 import re
 
 from movie_recommender import get_movie_recommendation
-from genre import recommend_top_5_existing_user, return_titles_users
+from GENRE import recommend_top_5_existing_user, return_titles_users
 # ----------------------------------------Basic configs------------------------------------------------------------------
 st.set_page_config(layout="wide")
 
