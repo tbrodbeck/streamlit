@@ -9,7 +9,7 @@ spec:
     - name: source-repo
       value: https://github.com/tbrodbeck/streamlit
     - name: image-repo
-      value: https://quay.io/repository/tillus/ds-bootcamp-orange-mvp
+      value: quay.io/tillus/ds-bootcamp-orange-mvp
   serviceAccountName: build-bot
   pipelineRef:
     name: build-new-deployment
