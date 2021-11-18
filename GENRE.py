@@ -7,10 +7,34 @@ from decouple import config
 
 def __iter__(self): return 0
 
-ratings = pd.read_csv('ratings2.csv')
-movies = pd.read_csv('movies1.csv')
-moviesWithGenres = pd.read_csv('moviesWithGenres.csv')
+endpoint_dc9ddb978841432ba58f9e610c697598 = 'https://s3.eu.cloud-object-storage.appdomain.cloud'
 
+client_dc9ddb978841432ba58f9e610c697598 = ibm_boto3.client(service_name='s3',
+    ibm_api_key_id=config('ibm-api-key-id-s3'),
+    ibm_auth_endpoint="https://iam.cloud.ibm.com/oidc/token",
+    config=Config(signature_version='oauth'),
+    endpoint_url=endpoint_dc9ddb978841432ba58f9e610c697598)
+
+body = client_dc9ddb978841432ba58f9e610c697598.get_object(Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m', Key='ratings2.csv')['Body']
+# add missing __iter__ method, so pandas accepts body as file-like object
+if not hasattr(body, "__iter__"):
+    body.__iter__ = types.MethodType(__iter__, body)
+
+ratings = pd.read_csv(body, index_col=0)
+
+body = client_dc9ddb978841432ba58f9e610c697598.get_object(Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m', Key='movies1.csv')['Body']
+# add missing __iter__ method, so pandas accepts body as file-like object
+if not hasattr(body, "__iter__"):
+    body.__iter__ = types.MethodType(__iter__, body)
+
+movies = pd.read_csv(body, index_col=0)
+
+body = client_dc9ddb978841432ba58f9e610c697598.get_object(Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m', Key='moviesWithGenres.csv')['Body']
+# add missing __iter__ method, so pandas accepts body as file-like object
+if not hasattr(body, "__iter__"):
+    body.__iter__ = types.MethodType(__iter__, body)
+
+moviesWithGenres = pd.read_csv(body, index_col=0)
 
 # # CONTENT BASED SOLUTION
 

@@ -104,10 +104,34 @@ import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.neighbors import NearestNeighbors
 from sklearn.pipeline import Pipeline
+from decouple import config
+import types
+from botocore.client import Config
+import ibm_boto3
+import io
 
+endpoint_dc9ddb978841432ba58f9e610c697598 = 'https://s3.eu.cloud-object-storage.appdomain.cloud'
 
-final_dataset = pd.read_csv('final_dataset.csv')
-movies = pd.read_csv('movies2.csv')
+client_dc9ddb978841432ba58f9e610c697598 = ibm_boto3.client(service_name='s3',
+    ibm_api_key_id=config('ibm-api-key-id-s3'),
+    ibm_auth_endpoint="https://iam.cloud.ibm.com/oidc/token",
+    config=Config(signature_version='oauth'),
+    endpoint_url=endpoint_dc9ddb978841432ba58f9e610c697598)
+
+body = client_dc9ddb978841432ba58f9e610c697598.get_object(Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m', Key='final_dataset.csv')['Body']
+# add missing __iter__ method, so pandas accepts body as file-like object
+if not hasattr(body, "__iter__"):
+    body.__iter__ = types.MethodType(__iter__, body)
+
+final_dataset = pd.read_csv(body, index_col=0)
+
+body = client_dc9ddb978841432ba58f9e610c697598.get_object(Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m', Key='movies2.csv')['Body']
+# add missing __iter__ method, so pandas accepts body as file-like object
+if not hasattr(body, "__iter__"):
+    body.__iter__ = types.MethodType(__iter__, body)
+
+movies = pd.read_csv(body, index_col=0)
+
 csr_data = csr_matrix(final_dataset.values)
 final_dataset.reset_index(inplace=True)
 
