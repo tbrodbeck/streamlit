@@ -102,3 +102,6 @@ final_dataset = final_dataset.loc[:, no_movies_voted[no_movies_voted > 50].index
 
 final_dataset.to_csv('final_dataset.csv')
 movies.to_csv('movies2.csv')
+
+client_dc9ddb978841432ba58f9e610c697598.upload_file(Filename='final_dataset.csv',Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m',Key='final_dataset.csv')
+client_dc9ddb978841432ba58f9e610c697598.upload_file(Filename='movies2.csv',Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m',Key='movies2.csv')

@@ -14,14 +14,6 @@
 # # The following code accesses a file in your IBM Cloud Object Storage. It includes your credentials.
 # # You might want to remove those credentials before you share the notebook.
 
-<<<<<<< HEAD
-=======
-client_dc9ddb978841432ba58f9e610c697598 = ibm_boto3.client(service_name='s3',
-    ibm_api_key_id=config('ibm-api-key-id-s3'),
-    ibm_auth_endpoint='https://iam.cloud.ibm.com/oidc/token',
-    config=Config(signature_version='oauth'),
-    endpoint_url=endpoint_dc9ddb978841432ba58f9e610c697598)
->>>>>>> 5b26b82830ceaef6db3807d63d738efb179a5215
 
 # endpoint_dc9ddb978841432ba58f9e610c697598 = 'https://s3.eu.cloud-object-storage.appdomain.cloud'
 

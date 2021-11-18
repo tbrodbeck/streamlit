@@ -61,5 +61,9 @@ for index, row in movies.iterrows():
 moviesWithGenres = moviesWithGenres.fillna(0)
 
 movies.to_csv('movies1.csv')
-ratings.to_csv('ratings.csv')
+ratings.to_csv('ratings2.csv')
 moviesWithGenres.to_csv('moviesWithGenres.csv')
+
+client_dc9ddb978841432ba58f9e610c697598.upload_file(Filename='movies1.csv',Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m',Key='movies1.csv')
+client_dc9ddb978841432ba58f9e610c697598.upload_file(Filename='ratings2.csv',Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m',Key='rating2.csv')
+client_dc9ddb978841432ba58f9e610c697598.upload_file(Filename='moviesWithGenres.csv',Bucket='mvpteamorange-donotdelete-pr-2zh4qs0w6rau5m',Key='moviesWithGenres.csv')
