@@ -7,3 +7,5 @@ streamlit
 .idea
 venv
 .vscode
+python_db2.py
+model_connect.py
