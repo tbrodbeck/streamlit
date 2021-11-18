@@ -36,6 +36,11 @@ if not hasattr(body, "__iter__"):
 
 moviesWithGenres = pd.read_csv(body, index_col=0)
 
+def return_titles_users():
+    users_list = list(ratings['user_id'])
+    titles = list(movies['title'])
+    return titles, users_list
+
 # # CONTENT BASED SOLUTION
 
 def define_existing_user_profile(user_id):
