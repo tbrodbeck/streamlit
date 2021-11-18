@@ -6,7 +6,7 @@ import requests
 import re
 
 from movie_recommender import get_movie_recommendation
-from GENRE import recommend_top_5_existing_user, return_titles_users
+from genre import recommend_top_5_existing_user, return_titles_users
 # ----------------------------------------Basic configs------------------------------------------------------------------
 st.set_page_config(layout="wide")
 
@@ -16,18 +16,8 @@ st.markdown("# What you would like to watch next?")
 sd_bar = st.sidebar
 sd_bar.header("User input")
 
-expander = st.expander("Sources and libraries")
-expander.markdown("""
-* Data source ...;
-* IBM tools:
-* Python packages such as pandas,
-* Python packages and corresponding libraries such as pandas, requests, streamlit, plotly and BeautifulSoup;
-* Inspiration from out DS EMEA bootcamp2
-"""
-                  )
-
 # --------------------- USER INPUTS ------------------------------
-reg_user = sd_bar.radio("Are you registered user?", ["Yes", "No"])
+reg_user = sd_bar.radio("Are you a registered user?", ["Yes", "No"])
 param_0 = False
 titles_list, users_list = return_titles_users()
 error_message = None
@@ -40,11 +30,11 @@ if reg_user == "Yes":
         if user_id.isnumeric():
             user_id = int(user_id)
             if user_id not in users_list:
-                error_message = "User id was not recognized"
+                error_message = "User id was not recognized."
             else:
                 recommendations = recommend_top_5_existing_user(user_id)
         else:
-            error_message = "The format of user id is wrong"
+            error_message = "The format of user id is wrong."
     
 
 else:
@@ -114,3 +104,14 @@ if not recommendations is None:
         st.markdown("")
     recommendations = None
 
+st.markdown("""---""")
+
+expander = st.expander("Sources and libraries")
+expander.markdown("""
+* IBM tools: CPfD IBM, Redhat @IBM, ibm_cos_sdk
+* Python packages and frameworks: streamlit, pandas, scipy, scikit_leran, requests, numpy, python-decouple, botocore3
+* Inspired by DS EMEA bootcamp2 
+"""
+                  )
+
+st.markdown("&copy ORANGE TEAM MVP")
