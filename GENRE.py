@@ -10,8 +10,8 @@ def __iter__(self): return 0
 endpoint_dc9ddb978841432ba58f9e610c697598 = 'https://s3.eu.cloud-object-storage.appdomain.cloud'
 
 client_dc9ddb978841432ba58f9e610c697598 = ibm_boto3.client(service_name='s3',
-    ibm_api_key_id=config('IBM_API_KEY_ID'),
-    ibm_auth_endpoint=config('IBM_AUTH_ENDPOINT'),
+    ibm_api_key_id=config('ibm-api-key-id-s3'),
+    ibm_auth_endpoint='https://iam.cloud.ibm.com/oidc/token',
     config=Config(signature_version='oauth'),
     endpoint_url=endpoint_dc9ddb978841432ba58f9e610c697598)
 
